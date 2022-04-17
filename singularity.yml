@@ -1,0 +1,7 @@
+---
+
+- name: Singularity playbook
+  hosts: localhost
+  roles:
+    - singularity
+  tags: singularity

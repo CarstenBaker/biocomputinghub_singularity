@@ -1,0 +1,6 @@
+---
+
+home: "{{ lookup('env','HOME') }}"
+
+go_version: 1.17.9
+

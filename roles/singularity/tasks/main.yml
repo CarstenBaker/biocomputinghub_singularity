@@ -1,0 +1,28 @@
+- name: Install the latest version of Development Tools
+  dnf:
+    name:
+      - "@Development Tools"
+    state: latest
+  when: ansible_os_family == 'RedHat'
+
+- name: install singularity dependencies
+  dnf:
+    name:
+      - openssl-devel
+      - libuuid-devel
+      - libseccomp-devel
+      - wget
+      - squashfs-tools
+    state: latest
+  when: ansible_os_family == 'RedHat'
+
+- name: Unarchive go
+  ansible.builtin.unarchive:
+    src: "https://dl.google.com/go/go{{ go_version }}.linux-amd64.tar.gz"
+    dest: /usr/local
+    remote_src: yes
+
+- name: Add to PATH
+  copy:
+    content: "export PATH=$PATH:/usr/local/go/bin"
+    dest: "/etc/profile.d/my_path.sh"
