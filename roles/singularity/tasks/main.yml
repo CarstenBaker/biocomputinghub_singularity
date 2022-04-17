@@ -5,7 +5,7 @@
     state: latest
   when: ansible_os_family == 'RedHat'
 
-- name: install singularity dependencies
+- name: Install singularity dependencies
   dnf:
     name:
       - openssl-devel
@@ -26,3 +26,23 @@
   copy:
     content: "export PATH=$PATH:/usr/local/go/bin"
     dest: "/etc/profile.d/my_path.sh"
+
+- name: Download singularity from github
+  git:
+    repo: https://github.com/sylabs/singularity.git
+    version: "{{ singularity_version }}"
+    dest: "{{ home }}/singularity/src/github.com/sylabs/singularity"
+
+- name: Compile singularity binary
+  shell: "export PATH=/usr/local/go/bin:$PATH; ./mconfig --prefix=/usr/local"
+  args:
+    chdir: "{{ home }}/singularity/src/github.com/sylabs/singularity"
+
+- name: Make singularity
+  make:
+    chdir: "{{ home }}/singularity/src/github.com/sylabs/singularity/builddir"
+
+- name: Install singularity
+  make:
+    target: install
+    chdir: "{{ home }}/singularity/src/github.com/sylabs/singularity/builddir"

@@ -4,3 +4,5 @@ home: "{{ lookup('env','HOME') }}"
 
 go_version: 1.17.9
 
+singularity_version: v3.9.8
+
