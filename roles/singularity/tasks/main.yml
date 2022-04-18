@@ -6,7 +6,8 @@
   when: ansible_os_family == 'RedHat'
   become: yes
 
-/bin/bash: indent: command not found
+- name: Install singularity dependencies
+  dnf:
     name:
       - openssl-devel
       - libuuid-devel
