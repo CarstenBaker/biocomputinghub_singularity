@@ -25,7 +25,7 @@
 - name: Add to PATH
   copy:
     content: "export PATH=$PATH:/usr/local/go/bin"
-    dest: "/etc/profile.d/my_path.sh"
+    dest: "/etc/profile.d/go_path.sh"
 
 - name: Download singularity from github
   git:
@@ -46,3 +46,14 @@
   make:
     target: install
     chdir: "{{ home }}/singularity/src/github.com/sylabs/singularity/builddir"
+
+- name: Delete go installer
+  file:
+    state: absent
+    path: "{{ home }}/go"
+
+- name: Delete singularity installer
+  file:
+    state: absent
+    path: "{{ home }}/singularity"
+
