@@ -4,9 +4,9 @@
       - "@Development Tools"
     state: latest
   when: ansible_os_family == 'RedHat'
+  become: yes
 
-- name: Install singularity dependencies
-  dnf:
+/bin/bash: indent: command not found
     name:
       - openssl-devel
       - libuuid-devel
@@ -15,17 +15,20 @@
       - squashfs-tools
     state: latest
   when: ansible_os_family == 'RedHat'
+  become: yes
 
 - name: Unarchive go
   ansible.builtin.unarchive:
     src: "https://dl.google.com/go/go{{ go_version }}.linux-amd64.tar.gz"
     dest: /usr/local
     remote_src: yes
+  become: yes
 
 - name: Add to PATH
   copy:
     content: "export PATH=$PATH:/usr/local/go/bin"
     dest: "/etc/profile.d/go_path.sh"
+  become: yes
 
 - name: Download singularity from github
   git:
@@ -33,27 +36,31 @@
     version: "{{ singularity_version }}"
     dest: "{{ home }}/singularity/src/github.com/sylabs/singularity"
 
-- name: Compile singularity binary
+- name: Compile singularity binary mconfig
   shell: "export PATH=/usr/local/go/bin:$PATH; ./mconfig --prefix=/usr/local"
   args:
     chdir: "{{ home }}/singularity/src/github.com/sylabs/singularity"
+  become: yes
 
 - name: Make singularity
   make:
     chdir: "{{ home }}/singularity/src/github.com/sylabs/singularity/builddir"
+  become: yes
 
 - name: Install singularity
   make:
     target: install
     chdir: "{{ home }}/singularity/src/github.com/sylabs/singularity/builddir"
+  become: yes
 
 - name: Delete go installer
   file:
     state: absent
     path: "{{ home }}/go"
+  become: yes
 
 - name: Delete singularity installer
   file:
     state: absent
     path: "{{ home }}/singularity"
-
+  become: yes
