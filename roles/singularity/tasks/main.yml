@@ -6,7 +6,15 @@
   when: ansible_os_family == 'RedHat'
   become: yes
 
-- name: Install singularity dependencies
+- name: Install the latest version of Build Essential
+  apt: 
+      pkg: 
+          - build-essential
+      state: latest
+  when: ansible_distribution == 'Ubuntu'
+  become: yes
+
+- name: Install singularity dependencies for RedHat
   dnf:
     name:
       - openssl-devel
@@ -18,17 +26,24 @@
   when: ansible_os_family == 'RedHat'
   become: yes
 
+- name: Install software dependencies for ubuntu
+  apt:
+    pkg:
+      - libssl-dev
+      - uuid-dev
+      - libgpgme11-dev
+      - squashfs-tools
+      - libseccomp-dev
+      - pkg-config
+    state: latest
+  when: ansible_distribution == 'Ubuntu'
+  become: true
+
 - name: Unarchive go
   ansible.builtin.unarchive:
     src: "https://dl.google.com/go/go{{ go_version }}.linux-amd64.tar.gz"
     dest: /usr/local
     remote_src: yes
-  become: yes
-
-- name: Add to PATH
-  copy:
-    content: "export PATH=$PATH:/usr/local/go/bin"
-    dest: "/etc/profile.d/go_path.sh"
   become: yes
 
 - name: Download singularity from github
