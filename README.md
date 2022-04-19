@@ -23,3 +23,28 @@ cd biocoputinghub_singularity/
 ```
 ansible-playbook singularity.yml -K
 ```
+
+# Ansible biocomputinghub singularity install for Ubuntu
+
+```
+sudo apt update -y
+sudo apt install ansible
+```
+
+#### Singularity needs to be installed as root user, in ubuntu if you are not already root it's best to switch to root using something like this:
+```
+sudo /bin/bash
+```
+
+### clone repo
+```
+git clone https://github.com/CarstenBaker/biocoputinghub_singularity.git
+cd biocoputinghub_singularity/
+```
+
+### run playbook
+
+#### running as root user
+```
+ansible-playbook singularity.yml
+```
