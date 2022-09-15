@@ -14,7 +14,7 @@ sudo dnf install ansible -y
 ### clone repo
 ```
 git clone https://github.com/CarstenBaker/biocoputinghub_singularity.git
-cd biocoputinghub_singularity/
+cd biocomputinghub_singularity/
 ```
 
 ### run playbook
@@ -39,7 +39,7 @@ sudo /bin/bash
 ### clone repo
 ```
 git clone https://github.com/CarstenBaker/biocoputinghub_singularity.git
-cd biocoputinghub_singularity/
+cd biocomputinghub_singularity/
 ```
 
 ### run playbook
