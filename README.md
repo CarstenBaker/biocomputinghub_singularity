@@ -13,7 +13,7 @@ sudo dnf install ansible -y
 
 ### clone repo
 ```
-git clone https://github.com/CarstenBaker/biocoputinghub_singularity.git
+git clone https://github.com/CarstenBaker/biocomputinghub_singularity.git
 cd biocomputinghub_singularity/
 ```
 
